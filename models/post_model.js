@@ -9,10 +9,6 @@ const postSchema = new mongoose.Schema({
         type: String,
         requtired: true
     },
-    _id:{
-        type: String,
-        requtired: true
-    }
 })
 
 module.exports = mongoose.model("Post", postSchema)

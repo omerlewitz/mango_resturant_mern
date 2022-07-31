@@ -10,13 +10,34 @@ const getAllPosts = (req, res) => {
   res.send("app get posts");
 };
 
+const getPostById = async (req, res) => {
+  console.log("getPostById id: " + req.params.id);
+  const id = req.params.id;
+  if (id == null || id == undefined) {
+    return res.status(400).send({ err: "no id provided" });
+  }
+  try {
+    post = await Post.findById(id)
+    if (post == null) {
+      res.status(400).send({
+        err: "post does not exists",
+      });
+    } else {
+      res.status(200).send(post);
+    }
+  } catch (err) {
+    res.status(400).send({
+      "err": err.message,
+    });
+  }
+};
+
 const createPost = async (req, res) => {
   console.log(req.body);
 
   const post = Post({
     Message: req.body.message,
     Sender: req.body.sender,
-    _id: mongoose.Schema.Types.ObjectId,
   });
 
   try {
@@ -32,5 +53,6 @@ const createPost = async (req, res) => {
 
 module.exports = {
   getAllPosts,
+  getPostById,
   createPost,
 };

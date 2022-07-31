@@ -5,6 +5,7 @@ const Post  = require('../controllers/post')
 
  
 router.get('/', Post.getAllPosts)
+router.get('/:id', Post.getPostById)
 router.post('/', Post.createPost)
 
 
