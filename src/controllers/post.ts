@@ -1,23 +1,22 @@
-const Post = require("../models/post_model");
-const mongoose = require('mongoose')
-
+import Post from "../models/post_model"
+import {Request, Response} from  "express"
 /**
  * Gets all the posts
  * @param {http request} req
  * @param {http response} res
  */
-const getAllPosts = (req, res) => {
+const getAllPosts = (req: Request, res: Response) => {
   res.send("app get posts");
 };
 
-const getPostById = async (req, res) => {
+const getPostById = async (req: Request, res: Response) => {
   console.log("getPostById id: " + req.params.id);
   const id = req.params.id;
   if (id == null || id == undefined) {
     return res.status(400).send({ err: "no id provided" });
   }
   try {
-    post = await Post.findById(id)
+    const post = await Post.findById(id)
     if (post == null) {
       res.status(400).send({
         err: "post does not exists",
@@ -32,16 +31,16 @@ const getPostById = async (req, res) => {
   }
 };
 
-const createPost = async (req, res) => {
+const createPost = async (req: Request, res: Response) => {
   console.log(req.body);
 
-  const post = Post({
+  const post = new Post({
     Message: req.body.message,
     Sender: req.body.sender,
   });
 
   try {
-    newPost = await post.save();
+    const newPost = await post.save();
     res.status(200).send(newPost);
   } catch (error) {
     res.status(400).send({
@@ -51,7 +50,7 @@ const createPost = async (req, res) => {
   }
 };
 
-module.exports = {
+export default {
   getAllPosts,
   getPostById,
   createPost,

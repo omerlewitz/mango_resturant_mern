@@ -1,7 +1,7 @@
-const request = require("supertest");
-const mongoose = require("mongoose");
-const app = require("../server");
-const Post = require("../models/post_model");
+import request from "supertest";
+import mongoose  from "mongoose";
+import app from "../server";
+import Post from "../models/post_model";
 
 beforeAll(async () => {
   //clear Posts collection
@@ -16,7 +16,7 @@ afterAll(async () => {
 describe("This is a Post API", () => {
   const postMessage = "this is my test message";
   const sender = "311131311";
-  var returendId = "";
+  let returendId = "";
 
   test("Test Post GET API", async () => {
     const response = await request(app).get("/post");
